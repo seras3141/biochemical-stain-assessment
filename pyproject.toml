@@ -1,0 +1,45 @@
+[project]
+name = "biochemical-stain-assessment"
+version = "0.1.0"
+description = "Registration and overlay of AbPAS (brightfield) and DAPI (fluorescence) CZI image pairs"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "imagecodecs>=2025.3.30",
+    "numpy>=2.2.6",
+    "scipy>=1.15.3",
+    "scikit-image>=0.25.2",
+    "tifffile>=2025.5.10",
+    "pillow>=12.2.0",
+    "napari-aicsimageio>=0.1.3",
+    "aicsimageio>=3.3.1",
+    "napari[all]>=0.7.0",
+    "aicspylibczi>=3.1.1",
+    "matplotlib>=3.10.9",
+    "opencv-python>=4.13.0.92",
+]
+
+[project.optional-dependencies]
+jupyter = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+    "ruff>=0.15.12",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+register-overlay = "biochemical_stain_assessment.register_overlay:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
