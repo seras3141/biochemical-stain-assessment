@@ -149,7 +149,15 @@ def segment_organoid(
     )
 
     smoothed = gaussian(arr_work, sigma=smooth_sigma, preserve_range=True)
-    valid = smoothed > 0.01 if foreground_is_bright else smoothed < 0.99 # Remove extreme values
+    valid = (
+        smoothed > 0.01 if foreground_is_bright else smoothed < 0.99
+    )  # Remove extreme values
+    if not np.any(valid):
+        mode = "bright" if foreground_is_bright else "dark"
+        raise ValueError(
+            f"Cannot determine an Otsu threshold: no valid pixels remain after "
+            f"excluding extreme values for {mode}-foreground segmentation."
+        )
     threshold = threshold_otsu(smoothed[valid])
     mask = smoothed > threshold if foreground_is_bright else smoothed < threshold
 
